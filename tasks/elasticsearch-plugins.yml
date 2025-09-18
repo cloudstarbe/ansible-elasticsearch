@@ -20,11 +20,10 @@
 
 #List currently installed plugins. We have to list the directories as the list commmand fails if the ES version is different than the plugin version.
 - name: Check installed elasticsearch plugins
-  become: yes
-  shell: "ls {{es_home}}/plugins {{list_command}}"
+  become: true
+  shell: "ls {{ es_home }}/plugins {{ list_command }} || true"
   register: installed_plugins
   changed_when: False
-  ignore_errors: yes
   environment:
     CONF_DIR: "{{ es_conf_dir }}"
     ES_PATH_CONF: "{{ es_conf_dir }}"
